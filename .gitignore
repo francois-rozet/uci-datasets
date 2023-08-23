@@ -1,0 +1,17 @@
+
+# specific files and foders
+.idea/
+.DS_Store
+
+# python bytecode files
+*.pyc
+*.pyo
+
+# data files
+*.pkl
+*.csv
+*.mat
+
+# text editor's temporary files
+*~
+
