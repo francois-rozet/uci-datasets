@@ -1,8 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
-
-import datasets
-import util
 
 
 class POWER:
@@ -24,18 +20,9 @@ class POWER:
 
         self.n_dims = self.trn.x.shape[1]
 
-    def show_histograms(self, split):
-
-        data_split = getattr(self, split, None)
-        if data_split is None:
-            raise ValueError('Invalid data split')
-
-        util.plot_hist_marginals(data_split.x)
-        plt.show()
-
 
 def load_data():
-    return np.load(datasets.root + 'power/data.npy')
+    return np.load('data/power/data.npy')
 
 
 def load_data_split_with_noise():

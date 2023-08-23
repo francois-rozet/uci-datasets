@@ -1,9 +1,5 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-
-import datasets
-import util
 
 
 class GAS:
@@ -17,7 +13,7 @@ class GAS:
 
     def __init__(self):
 
-        file = datasets.root + 'gas/ethylene_CO.pickle'
+        file = 'data/gas/ethylene_CO.pickle'
         trn, val, tst = load_data_and_clean_and_split(file)
 
         self.trn = self.Data(trn)
@@ -25,15 +21,6 @@ class GAS:
         self.tst = self.Data(tst)
 
         self.n_dims = self.trn.x.shape[1]
-
-    def show_histograms(self, split):
-
-        data_split = getattr(self, split, None)
-        if data_split is None:
-            raise ValueError('Invalid data split')
-
-        util.plot_hist_marginals(data_split.x)
-        plt.show()
 
 
 def load_data(file):
@@ -50,7 +37,7 @@ def load_data(file):
 def get_correlation_numbers(data):
     C = data.corr()
     A = C > 0.98
-    B = A.as_matrix().sum(axis=1)
+    B = A.values.sum(axis=1)
     return B
 
 
@@ -72,7 +59,7 @@ def load_data_and_clean(file):
 
 def load_data_and_clean_and_split(file):
 
-    data = load_data_and_clean(file).as_matrix()
+    data = load_data_and_clean(file).values
     N_test = int(0.1*data.shape[0])
     data_test = data[-N_test:]
     data_train = data[0:-N_test]

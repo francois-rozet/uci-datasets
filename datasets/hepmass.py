@@ -1,11 +1,7 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 from collections import Counter
 from os.path import join
-
-import datasets
-import util
 
 
 class HEPMASS:
@@ -23,23 +19,13 @@ class HEPMASS:
 
     def __init__(self):
 
-        path = datasets.root + 'hepmass/'
-        trn, val, tst = load_data_no_discrete_normalised_as_array(path)
+        trn, val, tst = load_data_no_discrete_normalised_as_array('data/hepmass/')
 
         self.trn = self.Data(trn)
         self.val = self.Data(val)
         self.tst = self.Data(tst)
 
         self.n_dims = self.trn.x.shape[1]
-
-    def show_histograms(self, split, vars):
-
-        data_split = getattr(self, split, None)
-        if data_split is None:
-            raise ValueError('Invalid data split')
-
-        util.plot_hist_marginals(data_split.x[:, vars])
-        plt.show()
 
 
 def load_data(path):
@@ -81,14 +67,14 @@ def load_data_no_discrete_normalised(path):
 def load_data_no_discrete_normalised_as_array(path):
 
     data_train, data_test = load_data_no_discrete_normalised(path)
-    data_train, data_test = data_train.as_matrix(), data_test.as_matrix()
+    data_train, data_test = data_train.values, data_test.values
 
     i = 0
     # Remove any features that have too many re-occurring real values.
     features_to_remove = []
     for feature in data_train.T:
         c = Counter(feature)
-        max_count = np.array([v for k, v in sorted(c.iteritems())])[0]
+        max_count = np.array([v for k, v in sorted(c.items())])[0]
         if max_count > 5:
             features_to_remove.append(i)
         i += 1

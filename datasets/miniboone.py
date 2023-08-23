@@ -1,8 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
-
-import datasets
-import util
 
 
 class MINIBOONE:
@@ -16,7 +12,7 @@ class MINIBOONE:
 
     def __init__(self):
 
-        file = datasets.root + 'miniboone/data.npy'
+        file = 'data/miniboone/data.npy'
         trn, val, tst = load_data_normalised(file)
 
         self.trn = self.Data(trn)
@@ -24,15 +20,6 @@ class MINIBOONE:
         self.tst = self.Data(tst)
 
         self.n_dims = self.trn.x.shape[1]
-
-    def show_histograms(self, split, vars):
-
-        data_split = getattr(self, split, None)
-        if data_split is None:
-            raise ValueError('Invalid data split')
-
-        util.plot_hist_marginals(data_split.x[:, vars])
-        plt.show()
 
 
 def load_data(root_path):
